@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+</head>
+<body>
+<!--add success-->
+<th:block th:fragment="add-success">
+    <p id="add-success"></p>
+</th:block>
+<!--edit success-->
+<th:block th:fragment="edit-success">
+    <p id="edit-success"></p>
+</th:block>
+<th:block th:fragment="change-success">
+    <p id="change-success"></p>
+</th:block>
+<th:block th:fragment="updateProfile-success">
+    <p id="updateProfile"></p>
+</th:block>
+<th:block th:fragment="sendMail-success">
+    <p id="sendMail"></p>
+</th:block>
+
+<th:block th:fragment="jquery-alert">
+    <script>
+        $(document).ready(function () {
+            $("#add-success").show(function () {
+                swal("Add Successfully!", "*added an account in row.", "success");
+            });
+            $("#updateProfile").show(function () {
+                swal("Update Profile Successfully!", "*updated in a row.", "success");
+            });
+            $("#edit-success").show(function () {
+                swal("Edit Successfully!", "*edit in a staff row.", "success");
+            });
+            $("#change-success").show(function () {
+                swal("Change Your Password Successfully!", "*updated an password in row.", "success");
+            });
+            $("#sendMail").show(function () {
+                swal("Send Mail Successfully!", "*please check your email.", "success");
+            });
+        });
+    </script>
+</th:block>
+
+<!--error field-->
+<th:block th:fragment="error(messError)">
+    <div class="alert alert-danger" role="alert" th:text="${messError}">
+    </div>
+</th:block>
+</body>
+</html>

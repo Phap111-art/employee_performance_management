@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- The Modal Del Account-->
+<div th:fragment="del-account(id,title,url)" class="modal fade" th:id="${id}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title" th:text="${title}"></h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <form th:action="@{${url}}" method="get">
+                <div th:replace="~{/fragment/input/inputHidden::inputHidden}"></div>
+                <input type="hidden" name="id" th:value="${item.id}"/>
+                <div class="modal-body">
+                    <p th:text="${'Are you want to delete  ' + item.fullName + ' ?'}"></p>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- The Modal Del Department-->
+<div th:fragment="del-department(id,title,url)" class="modal fade" th:id="${id}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title" th:text="${title}"></h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <form th:action="@{${url}}" method="get">
+                <div th:replace="~{/fragment/input/inputHidden::inputHidden}"></div>
+                <input type="hidden" name="id" th:value="${item.id}"/>
+                <div class="modal-body">
+                    <p th:text="${'Are you want to delete ' + item.name + ' ?'}"></p>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- The Modal Del Employee-->
+<div th:fragment="del-employee(id,title,url)" class="modal fade" th:id="${id}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title" th:text="${title}"></h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <form th:action="@{${url}}" method="get">
+                <div th:replace="~{/fragment/input/inputHidden::inputHidden}"></div>
+                <input type="hidden" name="id" th:value="${item.id}"/>
+                <div class="modal-body">
+                    <p th:text="${'Are you want to delete ' + item.name + ' ?'}"></p>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- The Modal Del Reward-->
+<div th:fragment="del-reward(id,title,url)" class="modal fade" th:id="${id}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title" th:text="${title}"></h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <form th:action="@{${url}}" method="get">
+                <div th:replace="~{/fragment/input/inputHidden::inputHidden}"></div>
+                <input type="hidden" name="id" th:value="${item.id}"/>
+                <div class="modal-body">
+                    <p th:text="${'Are you want to delete ' + item.employee.name + ' ?'}"></p>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--Modal del Warning-->
+<div th:fragment="del-warning(id,title)" class="modal fade" th:id="${id}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal body -->
+                <div class="modal-body text-center">
+                    <br>
+                    <i style="font-size: 80px;color: #ffc107;" class="fa fa-exclamation-triangle  "></i><br><br>
+                    <h4 class="text-danger" th:text="${ title + ' cannot be deleted!'}"></h4>
+                    <p th:text="${'*This ' + title +'already exists in the employee table!'}">
+                    </p>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+
+</div>
+</body>
+</html>

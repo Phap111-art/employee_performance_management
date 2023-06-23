@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2><a th:href="@{/oauth2/authorization/google}">Login with Google</a></h2>
+<h2><a th:href="@{/oauth2/authorization/github}">Login with GitHub</a></h2>
+<h1>Login</h1>
+<th:block th:if="${param.logout != null}">
+    <p style="font-weight: 500 ;font-size: 16px" class="text-success">
+        <b>*You have been logged out.</b>
+    </p>
+</th:block>
+<th:block  th:if="${param.error != null}">
+    <p style="font-weight: 500" class="text-danger">
+    <p class="text-danger">*[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
+    </p>
+</th:block>
+<form th:action="@{'/do-login'}" method="post">
+  <input type="text" name="username"><br>
+  <input type="text" name="password"><br>
+  <input type="submit" value="Ok"><br>
+</form>
+</body>
+</html>

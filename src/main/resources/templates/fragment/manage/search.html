@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+  <th:block th:fragment="search(url,field)">
+    <form th:action="@{${url}}" method="get">
+      <input type="hidden" name="pageCurrent" value="1"/>
+      <input type="hidden" name="pageCurrent" th:value="${size}"/>
+      <div class="input-group">
+        <div class="input-group rounded">
+          <input type="search" th:name="${field}" class="form-control rounded" placeholder="Search..." aria-label="Search" aria-describedby="search-addon" />
+          <button type="submit" class="btn btn-primary">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+  </th:block>
+</body>
+</html>

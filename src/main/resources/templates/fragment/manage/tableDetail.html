@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<!--Table Account-->
+<div th:fragment="tableAccount(data)" class="row">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>FullName</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Active</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="item : ${data}" >
+            <th:block th:if="${item.username != 'dinhphap'}">
+                <td th:text="${itemStat.index}"></td>
+                <td th:text="${item.fullName}"></td>
+                <td th:text="${item.username}"></td>
+
+                <td  th:if="${item.password != null}" style="-webkit-text-security: disc; /* Default */ "
+                     th:text="${#strings.length(item.password) &gt; 10 ?
+                  #strings.substring(item.password, 0, 10) + '...' : item.password}"></td>
+                <td th:unless="${item.password != null}"></td>
+                <td th:text="${item.email}"></td>
+                <td>
+                    <span th:each="role : ${item.roles}" th:text="${role.name}"></span>
+                </td>
+                <th:block th:if="${item.isActive == true}">
+                   <td> <span class="badge bg-primary">is active</span></td>
+                </th:block>
+                <th:block th:unless="${item.isActive == true}">
+                    <td><span class="badge bg-danger">inactive</span></td>
+                </th:block>
+                <td>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            th:attr="data-bs-target='#edit-account'+${item.id}">
+                        Edit
+                    </button>
+                    <div th:replace="~{/fragment/modal/edit::edit-account(${'edit-account'+item.id},'Edit Account','/dashboard/manage/edit-account')}"></div>
+                    |
+                    <th:block th:switch="${item.status}">
+                        <th:block th:case="1">
+                            <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                    th:attr="data-bs-target='#del-warning'+${item.id}">
+                                Del
+                            </button>
+                            <div th:replace="~{/fragment/modal/del::del-warning(${'del-warning'+item.id},'Account')}"></div>
+
+
+                        </th:block>
+                        <th:block th:case="0">
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                    th:attr="data-bs-target='#del-account'+${item.id}">
+                                Del
+                            </button>
+                            <div th:replace="~{/fragment/modal/del::del-account(${'del-account'+item.id},'Del Account','/dashboard/manage/del-account')}"></div>
+                        </th:block>
+                    </th:block>
+
+                </td>
+            </th:block>
+
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+<!--Table Department-->
+<div th:fragment="tableDepartment(data)" class="row">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Department code</th>
+            <th>Name Department</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${data}">
+            <td th:text="${itemStat.index +1}"></td>
+            <td th:text="${item.id}"></td>
+            <td th:text="${item.name}"></td>
+
+
+            <td>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        th:attr="data-bs-target='#edit-department'+${item.id}">
+                    Edit
+                </button>
+                <div th:replace="~{/fragment/modal/edit::edit-department(${'edit-department'+item.id},'Edit Department','/dashboard/manage/edit-department')}"></div>
+                |
+
+
+                <th:block th:if="${item.status == 1}">
+                    <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                            th:attr="data-bs-target='#del-warning'+${item.id}">
+                        Del
+                    </button>
+                    <div th:replace="~{/fragment/modal/del::del-warning(${'del-warning'+item.id},'Department')}"></div>
+
+                </th:block>
+                <th:block th:unless="${item.status == 1}">
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                            th:attr="data-bs-target='#del-department'+${item.id}">
+                        Del
+                    </button>
+                    <div th:replace="~{/fragment/modal/del::del-department(${'del-department'+item.id},'Del Department','/dashboard/manage/del-department')}"></div>
+                </th:block>
+
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+<!--Table Employee-->
+<div th:fragment="tableEmployee(data)" class="row">
+    <table class="table">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Photo</th>
+            <th>Emp Name</th>
+            <th>Birthday</th>
+            <th>Gender</th>
+            <th>Account</th>
+            <th>Department</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="item : ${data}">
+            <th:block th:if="${item.account.username != 'dinhphap'}">
+            <td></td>
+            <td><img width="50px" height="60px" class="rounded-circle"
+                     th:src="@{'/display/image/storage/' + ${item.photo} }"></td>
+            <td th:text="${item.name}"></td>
+            <td th:text="${#dates.format(item.birthday, 'dd-MM-yyyy')}"></td>
+            <td th:text="${item.gender ? 'Male' : 'Female'}"></td>
+            <td th:text="${item.account.username}"></td>
+            <td th:text="${item.department.name}"></td>
+            <td>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        th:attr="data-bs-target='#edit-employee'+${item.id}">
+                    Edit
+                </button>
+                <div th:replace="~{/fragment/modal/edit::edit-employee(${'edit-employee'+item.id},'Edit Employee','/dashboard/manage/edit-employee')}"></div>
+                |
+
+                <th:block th:if="${item.status == 1}">
+                    <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                            th:attr="data-bs-target='#del-warning'+${item.id}">
+                        Del
+                    </button>
+                    <div th:replace="~{/fragment/modal/del::del-warning(${'del-warning'+item.id},'Employee')}"></div>
+
+                </th:block>
+                <th:block th:unless="${item.status == 1}">
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                            th:attr="data-bs-target='#del-employee'+${item.id}">
+                        Del
+                    </button>
+                    <div th:replace="~{/fragment/modal/del::del-employee(${'del-employee'+item.id},'Del Employee','/dashboard/manage/del-employee')}"></div>
+                </th:block>
+            </td>
+            </th:block>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+<!--Table Reward-->
+<div th:fragment="tableReward(data)" class="row">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Emp Name</th>
+            <th>Type</th>
+            <th>Reason</th>
+            <th>Record date</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${data}">
+            <th:block th:if="${item.employee.id != 'NV81'}">
+            <td th:text="${itemStat.index +1}"></td>
+            <td>
+                <span th:each="emp : ${item.employee}" th:text="${emp.name}"></span>
+            </td>
+            <td th:text="${(item.achievement-item.discipline) > 0 ? 'achievement' : 'discipline'}"></td>
+            <td th:text="${item.reason}"></td>
+            <td th:text="${#temporals.format(item.recordDate, 'dd-MM-yyyy HH:mm:ss')}"></td>
+
+            <td>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        th:attr="data-bs-target='#edit-reward'+${item.id}">
+                    Edit
+                </button>
+                <div th:replace="~{/fragment/modal/edit::edit-reward(${'edit-reward'+item.id},'Edit Reward','/dashboard/manage/edit-reward')}"></div>
+                |
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                        th:attr="data-bs-target='#del-reward'+${item.id}">
+                    Del
+                </button>
+                <div th:replace="~{/fragment/modal/del::del-reward(${'del-reward'+item.id},'Del Reward','/dashboard/manage/del-reward')}"></div>
+
+            </td>
+            </th:block>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

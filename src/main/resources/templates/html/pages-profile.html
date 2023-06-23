@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{html/index}">
+
+<body>
+<article layout:fragment="content" class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <div class="row page-titles">
+        <div class="col-md-5 align-self-center">
+            <h3 class="text-themecolor">Profile</h3>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="javascript:void(0)">Home</a>
+                </li>
+                <li class="breadcrumb-item active">Profile
+                    <th:block th:if="${#authorization.expression('hasAuthority(''ADMIN'')') or session.authorities == 'ADMIN'}">
+                        <span class="badge rounded-pill bg-danger">Admin</span>
+                    </th:block>
+                </li>
+            </ol>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <!-- Row -->
+    <div class="row">
+        <!-- Column -->
+        <div class="col-lg-4 col-xlg-3 col-md-5">
+            <div class="card">
+                <div class="card-body">
+                    <center class="mt-4">
+                        <img
+                                th:src="@{'/display/image/storage/' + ${ACC.photo} }"
+                                class="img-circle"
+                                width="150"
+                        />
+                        <h4 class="card-title mt-2">Hanna Gover</h4>
+                        <h6 class="card-subtitle">Accoubts Manager Amix corp</h6>
+                        <div class="row text-center justify-content-md-center">
+                            <div class="col-4">
+                                <a href="javascript:void(0)" class="link"
+                                ><i class="fa fa-user"></i>
+                                    <font class="font-medium">254</font>
+                                </a>
+                            </div>
+                            <div class="col-4">
+                                <a href="javascript:void(0)" class="link"
+                                ><i class="fa fa-camera"></i>
+                                    <font class="font-medium">54</font>
+                                </a>
+                            </div>
+                        </div>
+                    </center>
+                </div>
+            </div>
+        </div>
+        <!-- Column -->
+        <!-- Column -->
+        <div class="col-lg-8 col-xlg-9 col-md-7">
+            <div class="card">
+                <!-- Tab panes -->
+                <div class="card-body">
+                    <!--Alert Success-->
+                    <th:block th:if="${edit_success != null}">
+                        <script th:replace="~{/fragment/alert/alert::updateProfile-success}"></script>
+                    </th:block>
+                    <!--Alert Error-->
+                    <div th:if="${error != null}" th:text="${error}" class="alert alert-danger" role="alert">
+                    </div>
+                    <!--Form-->
+                    <form class="form-horizontal form-material mx-2" th:object="${EMPLOYEE}"
+                          th:action="@{'/dashboard/update-profile'}" method="post" enctype="multipart/form-data">
+                        <!--Id account-->
+                        <input type="hidden" name="account.id" th:value="${ACC.id}">
+                        <!--Id employee-->
+                        <input type="hidden" th:field="*{id}">
+                        <!--FullName account-->
+                        <div class="form-group">
+                            <label class="col-md-12">fullName</label>
+                            <div class="col-md-12">
+                                <input name="account.fullName" th:value="${ACC.fullName}" type="text"
+                                       class="form-control form-control-line required"/>
+                            </div>
+                        </div>
+                        <!--Email account-->
+                        <div class="form-group">
+                            <label class="col-md-12">Email</label>
+                            <div class="col-md-12">
+                                <input name="account.email" th:value="${ACC.email}" type="email"
+                                       class="form-control form-control-line" required/>
+                            </div>
+                        </div>
+                        <!--Username-->
+                        <div class="form-group">
+                            <label class="col-md-12">Username</label>
+                            <div class="col-md-12">
+                                <input name="account.username" th:value="${ACC.username}"
+                                       type="text" laceholder="Enter Username"
+                                       class="form-control form-control-line" required
+                                />
+                            </div>
+                        </div>
+                        <!--Password-->
+                        <div class="form-group">
+                            <label class="col-md-12">Password</label>
+                            <div class="col-md-12">
+                                <input name="account.password" th:value="${ACC.password}"
+                                       type="password" laceholder="Enter Password"
+                                       class="form-control form-control-line" required
+                                />
+                            </div>
+                        </div>
+                        <!--Phone Emp-->
+                        <input  pattern="[0-9]{1,10}" title="must not exceed 10 digits" th:replace="~{/fragment/input/inputFiled::inputProfile('Phone No','phone','text')}"/>
+                        <!--Birthday Emp-->
+                        <div class="form-group">
+                            <label class="col-md-12">Birthday</label>
+                            <div class="col-md-12">
+                                <input name="date"
+                                       th:value="${#dates.format(EMPLOYEE.birthday, 'yyyy-MM-dd')}"
+                                       type="date"
+                                       class="form-control form-control-line" required
+                                />
+                            </div>
+                        </div>
+                        <!--Gender Emp-->
+                        <div class="form-group">
+                            <label class="col-md-12">Gender</label>
+                            <div class="col-md-12">
+                                <div class="form-check">
+                                    <th:block th:if="${EMPLOYEE.gender == true}">
+                                        <input checked class="form-check-input" type="radio" name="gender"
+                                               id="flexRadioDefault1">
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Male
+                                        </label>
+                                    </th:block>
+                                    <th:block th:unless="${EMPLOYEE.gender == true}">
+                                        <input class="form-check-input" type="radio" name="gender"
+                                               id="flexRadioDefault1">
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Male
+                                        </label>
+                                    </th:block>
+
+                                    <th:block th:if="${EMPLOYEE.gender == false}">
+                                        <input checked class="form-check-input" type="radio" name="gender"
+                                               id="flexRadioDefault2">
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                            Female
+                                        </label>
+                                    </th:block>
+                                    <th:block th:unless="${EMPLOYEE.gender == false}">
+                                        <input class="form-check-input" type="radio" name="gender"
+                                               id="flexRadioDefault2">
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                            Female
+                                        </label>
+                                    </th:block>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Note Emp-->
+                        <div class="form-group">
+                            <label class="col-md-12">Note</label>
+                            <div class="col-md-12">
+                        <textarea name="note"
+                                  rows="3"
+                                  class="form-control form-control-line"
+                        >[[${EMPLOYEE.note}]]</textarea>
+                            </div>
+                        </div>
+                        <!--File Emp-->
+                        <div class="form-group">
+                            <label class="col-md-12">Photo Profile</label>
+                            <div class="col-md-12">
+                                <input name="file" th:value="${EMPLOYEE.file}"
+                                       type="file"
+                                       class="form-control form-control-line"
+                                />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <button class="btn btn-success">Update Profile</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Column -->
+    </div>
+    <!-- Row -->
+    <!-- ============================================================== -->
+    <!-- End PAge Content -->
+    <!-- ============================================================== -->
+</article>
+</body>
+</html>

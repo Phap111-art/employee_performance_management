@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<th:block th:fragment="pagination(url)">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li th:if="${pageCurrent > 1}" class="page-item"><a class="page-link"
+                                                                th:href="@{${url} +  '?pageCurrent=1' + '&size=' + ${size} + '&search=' + ${search}  }">Start</a>
+            </li>
+            <li th:if="${pageCurrent > 1 }" class="page-item ">
+                <a class="page-link"
+                   th:href="@{ ${url} +'?pageCurrent='+ ${pageCurrent -1} + '&size=' + ${size} + '&search=' + ${search} }"
+                   tabindex="-1" aria-disabled="true">Previous</a>
+            </li>
+            <th:block th:each="i: ${#numbers.sequence(1, totalPages)}">
+                <li class="page-item"><a th:if="${pageCurrent == i}" style="color: red" class="page-link"
+                                         th:href="@{${url} + '?pageCurrent=' + ${i} + '&size=' +${size} + '&search=' + ${search} }">[[${i}]]</a>
+                </li>
+                <li class="page-item"><a th:unless="${pageCurrent == i}"
+                                         th:href="@{ ${url} + '?pageCurrent=' + ${i} + '&size=' +${size} + '&search=' + ${search}}"
+                                         style="color: black" class="page-link"
+                >[[${i}]]</a>
+                </li>
+            </th:block>
+            <li class="page-item" th:if="${pageCurrent < totalPages}">
+                <a class="page-link"
+                   th:href="@{${url} + '?pageCurrent='+ ${pageCurrent +1} + '&size=' + ${size} + '&search=' + ${search} }">Next</a>
+            </li>
+            <li th:if="${pageCurrent < totalPages}" class="page-item"><a class="page-link"
+                                                                        th:href="@{${url} + '?pageCurrent='+ ${totalPages} + '&size=' + ${size} + '&search=' + ${search} }">Late</a>
+            </li>
+        </ul>
+    </nav>
+</th:block>
+</body>
+</html>

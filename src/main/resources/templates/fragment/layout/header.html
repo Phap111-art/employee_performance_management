@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<th:block th:fragment="header">
+    <header class="topbar">
+        <nav class="navbar top-navbar navbar-expand-md navbar-light">
+            <!-- ============================================================== -->
+            <!-- Logo -->
+            <!-- ============================================================== -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/index.html">
+                    <!-- Logo icon --><b>
+                    <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                    <!-- Dark Logo icon -->
+                    <img
+                            src="/assets/images/logo-icon.png"
+                            alt="homepage"
+                            class="dark-logo"
+                    />
+                    <!-- Light Logo icon -->
+                    <img
+                            src="/assets/images/logo-light-icon.png"
+                            alt="homepage"
+                            class="light-logo"
+                    />
+                </b>
+                    <!--End Logo icon -->
+                    <!-- Logo text --><span>
+                <!-- dark Logo text -->
+                <img
+                        src="/assets/images/logo-text.png"
+                        alt="homepage"
+                        class="dark-logo" />
+                    <!-- Light Logo text -->
+                <img
+                        src="/assets/images/logo-light-text.png"
+                        class="light-logo"
+                        alt="homepage"
+                /></span>
+                </a>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Logo -->
+            <!-- ============================================================== -->
+            <div class="navbar-collapse">
+                <!-- ============================================================== -->
+                <!-- toggle and nav items -->
+                <!-- ============================================================== -->
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a
+                                class="
+                    nav-link nav-toggler
+                    hidden-md-up
+                    waves-effect waves-dark
+                  "
+                                href="javascript:void(0)"
+                        ><i class="fa fa-bars"></i
+                        ></a>
+                    </li>
+                    <!-- ============================================================== -->
+                    <!-- Search -->
+                    <!-- ============================================================== -->
+                    <li class="nav-item hidden-xs-down search-box">
+                        <a
+                                class="nav-link hidden-sm-down waves-effect waves-dark"
+                                href="javascript:void(0)"
+                        ><i class="fa fa-search"></i
+                        ></a>
+                        <form class="app-search">
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Search & enter"
+                            />
+                            <a class="srh-btn"><i class="fa fa-times"></i></a>
+                        </form>
+                    </li>
+                </ul>
+                <!-- ============================================================== -->
+                <!-- User profile and search -->
+                <!-- ============================================================== -->
+                <ul class="navbar-nav my-lg-0">
+                    <!-- ============================================================== -->
+                    <!-- Profile -->
+                    <!-- ============================================================== -->
+
+                    <li class="dropdown dropdown-menu-end">
+                        <button type="button" class="waves-effect waves-dark
+                    profile-pic btn border-0 btn-btn-default dropdown-toggle user-action" data-bs-toggle="dropdown">
+                            <img th:src="@{'/display/image/storage/' +${session.ACCOUNT.photo}}" class="rounded-circle" alt="Avatar">
+                            <span class=" fw-normal fs-6"th:text="${session.ACCOUNT.fullName}">
+                            </span>  <i class="fa fa-caret-down" aria-hidden="true"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/dashboard/pages-profile"><i class="fa fa-user-o"></i> Profile</a></li>
+                            <div class="divider dropdown-divider"></div>
+                            <li><a  href="/logout"  class="dropdown-item" ><i class="fa fa-sign-out" aria-hidden="true"></i>
+                                Logout</a></li>
+
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+    </header>
+</th:block>
+</body>
+</html>

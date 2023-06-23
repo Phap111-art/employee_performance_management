@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--input Add-->
+<div th:fragment="inputAdd(label,field,type)" class="mb-3 mt-3">
+    <label class="form-label" th:text="${label}"></label>
+    <input  th:field="*{__${field}__}" th:type="${type}" class="form-control" th:id="${field}" th:placeholder="${'Enter ' +label}" required>
+</div>
+<!--input Edit-->
+<div th:fragment="inputEdit(label,field,value,type)" class="mb-3 mt-3">
+    <label class="form-label" th:text="${label}"></label>
+    <input  th:name="${field}" th:value="${value}" th:type="${type}" class="form-control" th:id="${field}" th:placeholder="${'Enter ' +label}" required>
+</div>
+<!--input Profile-->
+<div th:fragment="inputProfile(label,field,type)"  class="form-group">
+    <label class="col-md-12" th:text="${label}"></label>
+    <div class="col-md-12">
+        <input th:field="*{__${field}__}"
+               th:type="${type}"
+               th:placeholder="${'Enter ' +label}"
+               class="form-control form-control-line" required
+        />
+    </div>
+</div>
+</body>
+</html>

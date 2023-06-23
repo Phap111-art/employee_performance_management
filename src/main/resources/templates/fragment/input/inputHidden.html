@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<th:block th:fragment="inputHidden">
+    <input type="hidden" name="pageCurrent" th:value="${pageCurrent}">
+    <input type="hidden" name="size" th:value="${size}">
+    <input type="hidden" name="search" th:value="${search}">
+</th:block>
+</body>
+</html>

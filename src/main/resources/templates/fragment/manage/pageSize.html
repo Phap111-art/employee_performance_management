@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+<th:block th:fragment="pageSize(url,field)">
+  <div class="row">
+    <div class="col-3"><p>Show entries:</p></div>
+    <div class="col-9">
+      <form style="width: 120px;" th:action="@{${url}}" method="get">
+        <input type="hidden" name="pageCurrent" th:value="1"/>
+        <input type="hidden" name="search" th:value="${search}"/>
+        <div class="form-group ">
+          <select th:name="${field}" class="form-control" onchange='if(this.value != 0) { this.form.submit(); }'>
+            <option selected th:text="${'Size : ' + size}">Size</option>
+            <option value="5" th:text="5"></option>
+            <option value="10" th:text="10"></option>
+            <option value="15" th:text="15"></option>
+            <option value="20" th:text="20"></option>
+            <option value="25" th:text="25"></option>
+          </select>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</th:block>
+</body>
+</html>

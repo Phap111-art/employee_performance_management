@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<!--modal edit account-->
+<div th:fragment="edit-account(id,title,url)" class="modal fade" th:id="${id}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title" th:text="${title}"></h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form th:action="@{${url}}" method="post">
+                    <div th:replace="~{/fragment/input/inputHidden::inputHidden}"></div>
+                    <input type="hidden" name="id" th:value="${item.id}"/>
+                    <input th:replace="~{/fragment/input/inputFiled::inputEdit('FullName','fullName',${item.fullName},'text')}"/>
+                    <input th:replace="~{/fragment/input/inputFiled::inputEdit('Email','email',${item.email},'email')}"/>
+                    <input th:replace="~{/fragment/input/inputFiled::inputEdit('Username','username',${item.username},'text')}"/>
+                    <input th:replace="~{/fragment/input/inputFiled::inputEdit('Password','password',${item.password},'password')}"/>
+
+                    <!--Auto tick role for id account-->
+                    <label class="form-label">Role :</label>
+                    <th:block th:each="isRole :  ${item.roles}">
+                        <th:block th:if="${isRole.id == 1}">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="roleId"
+                                       th:id="${'inlineRadioEdit1' + item.id}"
+                                       value="1" checked>
+                                <label class="form-check-label" th:for="${'inlineRadioEdit1' + item.id}">Admin</label>
+                            </div>
+                        </th:block>
+                        <th:block th:unless="${isRole.id == 1}">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="roleId"
+                                       th:id="${'inlineRadioEdit1' + item.id}"
+                                       value="1">
+                                <label class="form-check-label" th:for="${'inlineRadioEdit1' + item.id}">Admin</label>
+                            </div>
+                        </th:block>
+                        <th:block th:if="${isRole.id == 2}">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="roleId"
+                                       th:id="${'inlineRadioEdit2' + item.id}"
+                                       value="2" checked>
+                                <label class="form-check-label" th:for="${'inlineRadioEdit2' + item.id}"> Normal</label>
+                            </div>
+                        </th:block>
+                        <th:block th:unless="${isRole.id == 2}">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="roleId"
+                                       th:id="${'inlineRadioEdit2' + item.id}"
+                                       value="2">
+                                <label class="form-check-label" th:for="${'inlineRadioEdit2' + item.id}"> Normal</label>
+                            </div>
+                        </th:block>
+                    </th:block>
+                    <!--Active-->
+                    <div class="row">
+                        <label class="form-label">Active:</label>
+                        <div class="col-2">
+                            <th:block th:if="${item.isActive == true}">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="active"
+                                           th:id="${'editIsActive' + item.id}"
+                                           value="1" checked>
+                                    <label class="form-check-label" th:for="${'editIsActive' + item.id}">Enable</label>
+                                </div>
+                            </th:block>
+                            <th:block th:unless="${item.isActive == true}">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="active"
+                                           th:id="${'editIsActive' + item.id}"
+                                           value="1">
+                                    <label class="form-check-label" th:for="${'editIsActive' + item.id}">Enable</label>
+                                </div>
+                            </th:block>
+
+                        </div>
+                        <div class="col-2">
+                            <th:block th:if="${item.isActive == false}">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="active"
+                                           th:id="${'editIsActive2' + item.id}"
+                                           value="0" checked>
+                                    <label class="form-check-label" th:for="${'editIsActive2' + item.id}">Disable</label>
+                                </div>
+                            </th:block>
+                            <th:block th:unless="${item.isActive == false}">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="active"
+                                           th:id="${'editIsActive2' + item.id}"
+                                           value="0">
+                                    <label class="form-check-label" th:for="${'editIsActive2' + item.id}">Disable</label>
+                                </div>
+                            </th:block>
+
+                        </div>
+                        <div class="col-8"></div>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--modal edit department-->
+<div th:fragment="edit-department(id,title,url)" class="modal fade" th:id="${id}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title" th:text="${title}"></h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+
+                <form th:action="@{${url}}" method="post">
+                    <input type="hidden" name="id" th:value="${item.id}" >
+                    <div th:replace="~{/fragment/input/inputHidden::inputHidden}"></div>
+                    <div class="mb-3 mt-3">
+                        <label class="form-label">Department code</label>
+                        <input name="id" th:value="${item.id}" th:type="text" class="form-control"
+                               placeholder="Enter Id" disabled>
+                    </div>
+                    <input th:replace="~{/fragment/input/inputFiled::inputEdit('Department name','name',${item.name},'text')}"/>
+                    <br>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--modal edit employee-->
+<div th:fragment="edit-employee(id,title,url)" class="modal fade" th:id="${id}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title" th:text="${title}"></h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+
+                <form th:action="@{${url}}" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="id" th:value="${item.id}" >
+                    <div th:replace="~{/fragment/input/inputHidden::inputHidden}"></div>
+                    <div class="modal-body">
+                        <div class="mb-3 mt-3">
+                            <label class="form-label">Emp Code</label>
+                            <input type="text" class="form-control" name="id" id="id" th:value="${item.id}" disabled>
+                        </div>
+                        <input th:replace="~{/fragment/input/inputFiled::inputEdit('Emp Name','Name',${item.name},'text')}"/>
+                        <div class="row">
+                            <div class="col">
+                                <select disabled name="account_id" class="form-select"
+                                        aria-label="Default select example">
+                                    <th:block th:each="acc : ${ACCOUNT}">
+                                        <th:block th:if="${acc.id == item.account.id}">
+                                            <option th:value="${acc.id}" th:text="${acc.username}" selected>
+                                            </option>
+                                        </th:block>
+                                        <th:block th:unless="${acc.id == item.account.id}">
+                                            <option th:value="${acc.id}" th:text="${acc.username}">
+                                            </option>
+                                        </th:block>
+                                    </th:block>
+
+                                </select>
+                            </div>
+                            <div class="col">
+                                <select name="department_id" class="form-select" aria-label="Default select example">
+                                    <th:block th:each="depart : ${DEPARTMENT}">
+                                        <th:block th:if="${depart.id == item.department.id}">
+                                            <option th:value="${depart.id}" th:text="${depart.name}" selected>
+                                            </option>
+                                        </th:block>
+                                        <th:block th:unless="${depart.id == item.department.id}">
+                                            <option th:value="${depart.id}" th:text="${depart.name}">
+                                            </option>
+                                        </th:block>
+                                    </th:block>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3 mt-3">
+                            <label class="form-label">Photo</label>
+                            <input type="file" class="form-control" name="file" id="file" placeholder="Enter Photo">
+                        </div>
+
+                        <div class="row">
+                            <label class="form-label">Gender:</label>
+                            <div class="col-2">
+                                <th:block th:if="${item.gender == true}">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender"
+                                               th:id="${'editReward' + item.id}"
+                                               value="1" checked>
+                                        <label class="form-check-label" th:for="${'editReward' + item.id}">Male</label>
+                                    </div>
+                                </th:block>
+                                <th:block th:unless="${item.gender == true}">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender"
+                                               th:id="${'editReward' + item.id}"
+                                               value="1">
+                                        <label class="form-check-label" th:for="${'editReward' + item.id}">Male</label>
+                                    </div>
+                                </th:block>
+
+                            </div>
+                            <div class="col-2">
+                                <th:block th:if="${item.gender == false}">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender"
+                                               th:id="${'editReward2' + item.id}"
+                                               value="0" checked>
+                                        <label class="form-check-label" th:for="${'editReward2' + item.id}">Female</label>
+                                    </div>
+                                </th:block>
+                                <th:block th:unless="${item.gender == false}">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender"
+                                               th:id="${'editReward2' + item.id}"
+                                               value="0">
+                                        <label class="form-check-label" th:for="${'editReward2' + item.id}">Female</label>
+                                    </div>
+                                </th:block>
+
+                            </div>
+                            <div class="col-8"></div>
+                        </div>
+                        <div  class="mb-3 mt-3">
+                            <label class="form-label" >Birthday :</label>
+                            <input  name="date" th:value="${#dates.format(item.birthday, 'yyyy-MM-dd')}" type="date" class="form-control"  placeholder="Enter Date" required>
+                        </div>
+                        <input th:replace="~{/fragment/input/inputFiled::inputEdit('Phone No','phone',${item.phone},'text')}"/>
+                        <input th:replace="~{/fragment/input/inputFiled::inputEdit('Salary','salary',${item.salary},'tel')}"/>
+                        <div class="form-group">
+                            <label for="comment">Comment:</label>
+                            <textarea name="note" th:placeholder="${item.note}" class="form-control" rows="5"
+                                      id="comment">[[${item.note}]]</textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--modal edit reward-->
+<div th:fragment="edit-reward(id,title,url)" class="modal fade" th:id="${id}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title" th:text="${title}"></h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form th:action="@{${url}}" method="post">
+                    <div th:replace="~{/fragment/input/inputHidden::inputHidden}"></div>
+                    <input type="hidden" name="id" th:value="${item.id}"/>
+
+                    <div class="mb-3 mt-3">
+                        <label class="form-label">Employee </label>
+                        <select name="employeeId" class="form-select" aria-label="Default select example">
+                            <th:block th:each="emp : ${EMP}">
+                                <th:block th:if="${emp.id == item.employee.id}">
+                                    <option th:value="${emp.id}" th:text="${emp.name}" selected>
+                                    </option>
+                                </th:block>
+                                <th:block th:unless="${emp.id == item.employee.id}">
+                                    <option th:value="${emp.id}" th:text="${emp.name}">
+                                    </option>
+                                </th:block>
+                            </th:block>
+                        </select>
+                    </div>
+                    <!--Auto tick role for id reward-->
+                    <div class="row">
+                        <label class="form-label">Type:</label>
+                        <div class="col-4">
+
+                            <th:block th:if="${(item.achievement-item.discipline) > 0 }">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="type"
+                                           th:id="${'editReward' + item.id}"
+                                           value="true" checked>
+                                    <label class="form-check-label" th:for="${'editReward' + item.id}">achievement</label>
+                                </div>
+                            </th:block>
+                            <th:block th:unless="${(item.achievement-item.discipline) > 0}">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="type"
+                                           th:id="${'editReward' + item.id}"
+                                           value="true">
+                                    <label class="form-check-label" th:for="${'editReward' + item.id}">achievement</label>
+                                </div>
+                            </th:block>
+                        </div>
+                        <div class="col-4">
+                            <th:block th:if="${(item.achievement-item.discipline) <= 0}">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="type"
+                                           th:id="${'editReward2' + item.id}"
+                                           value="false" checked>
+                                    <label class="form-check-label" th:for="${'editReward2' + item.id}">discipline</label>
+                                </div>
+                            </th:block>
+                            <th:block th:unless="${(item.achievement-item.discipline) <= 0}">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="type"
+                                           th:id="${'editReward2' + item.id}"
+                                           value="false">
+                                    <label class="form-check-label" th:for="${'editReward2' + item.id}">discipline</label>
+                                </div>
+                            </th:block>
+
+                        </div>
+                        <div class="col-6"></div>
+                    </div>
+                    <br>
+                    <div  class="mb-3 mt-3">
+                        <label class="form-label" >record Date</label>
+                        <input name="recordDate"
+                               th:value="${#temporals.format(item.recordDate, 'yyyy-MM-dd HH:mm:ss')}" class="form-control" disabled >
+                    </div>
+                    <div class="form-group">
+                        <label for="comment">Comment:</label>
+                        <textarea class="form-control" name="reason" th:placeholder="${item.reason}" rows="2" id="comment">[[${item.reason}]]</textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

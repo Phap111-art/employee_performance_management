@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<th:block th:fragment="aside">
+    <aside class="left-sidebar">
+        <!-- Sidebar scroll-->
+        <div class="scroll-sidebar">
+            <!-- Sidebar navigation-->
+            <nav class="sidebar-nav">
+                <ul id="sidebarnav">
+                    <li>
+                        <a
+                                class="waves-effect waves-dark"
+                                href="/dashboard/home"
+                                aria-expanded="false"
+                        ><i class="fa fa-tachometer"></i
+                        ><span class="hide-menu">Dashboard</span></a
+                        >
+                    </li>
+                    <li>
+                        <a
+                                class="waves-effect waves-dark"
+                                href="/dashboard/pages-profile"
+                                aria-expanded="false"
+                        ><i class="fa fa-user-circle-o"></i
+                        ><span class="hide-menu">Profile</span></a
+                        >
+                    </li>
+                    <!--DropMenu-->
+                    <th:block th:if="${#authorization.expression('hasAuthority(''ADMIN'')') or session.authorities == 'ADMIN'}">
+                        <li>
+                            <th:block th:classappend="'dropdown'">
+                                <a data-bs-toggle="dropdown"
+                                   class="waves-effect waves-dark dropdown-toggle"
+                                   aria-expanded="false">
+                                    <i class="fa fa-tasks"></i><span class="hide-menu">Manager</span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="/dashboard/manage/pages-account"><i
+                                            class="fa fa-user-circle-o fa-lg"></i><span class="hide-menu ">&nbsp;&nbsp;Account</span></a>
+                                    </li>
+                                    <li><a class="dropdown-item" href="/dashboard/manage/pages-department">&nbsp;<i
+                                            class="fa fa-building-o fa-lg"></i><span class="hide-menu ">&nbsp;&nbsp;Department</span></a>
+                                    </li>
+                                    <li><a class="dropdown-item" href="/dashboard/manage/pages-employee"><i
+                                            class="fa fa-users fa-lg"></i><span
+                                            class="hide-menu ">&nbsp;&nbsp;Employee</span></a></li>
+                                    <li><a class="dropdown-item" href="/dashboard/manage/pages-reward">&nbsp;<i
+                                            class="fa fa-star-half-o fa-lg"></i><span
+                                            class="hide-menu ">&nbsp;&nbsp;Reward</span></a></li>
+                                </ul>
+                            </th:block>
+                        </li>
+                    </th:block>
+                    <li>
+                        <th:block th:classappend="'dropdown'">
+                            <a data-bs-toggle="dropdown"
+                               class="waves-effect waves-dark dropdown-toggle"
+                               aria-expanded="false">
+                                <i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hide-menu">Statistics</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/dashboard/statistic/pages-personal">
+                                    <i class="fa-sharp fa-regular fa-person"></i><span class="hide-menu ">&nbsp;Personal</span></a>
+                                </li>
+
+                            </ul>
+                        </th:block>
+                    </li>
+                    <!--..............-->
+                    <li>
+                        <a
+                                class="waves-effect waves-dark"
+                                href="/dashboard/icon-fontawesome"
+                                aria-expanded="false"
+                        ><i class="fa fa-smile-o"></i
+                        ><span class="hide-menu">Icons</span></a
+                        >
+                    </li>
+                    <li>
+                        <a
+                                class="waves-effect waves-dark"
+                                href="/dashboard/map-google"
+                                aria-expanded="false"
+                        ><i class="fa fa-globe"></i
+                        ><span class="hide-menu">Map</span></a
+                        >
+                    </li>
+                    <li>
+                        <a
+                                class="waves-effect waves-dark"
+                                href="/dashboard/pages-blank"
+                                aria-expanded="false"
+                        ><i class="fa fa-bookmark-o"></i
+                        ><span class="hide-menu">Blank</span></a
+                        >
+                    </li>
+                    <li>
+                        <a
+                                class="waves-effect waves-dark"
+                                href="/dashboard/pages-error-404"
+                                aria-expanded="false"
+                        ><i class="fa fa-question-circle"></i
+                        ><span class="hide-menu">404</span></a
+                        >
+                    </li>
+                </ul>
+                <div class="text-center mt-4">
+
+                </div>
+            </nav>
+            <!-- End Sidebar navigation -->
+        </div>
+        <!-- End Sidebar scroll-->
+    </aside>
+</th:block>
+</body>
+</html>

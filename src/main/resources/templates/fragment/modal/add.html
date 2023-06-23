@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- Modal Add Account -->
+<div th:fragment="add-account(id,title,url)" class="modal fade" th:id="${id}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title" th:text="${title}"></h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <form th:action="@{${url}}" th:object="${USER}" method="post">
+                <div th:replace="~{/fragment/input/inputHidden::inputHidden}"></div>
+
+                <div class="modal-body">
+                    <input th:replace="~{/fragment/input/inputFiled::inputAdd('FullName','fullName','text')}"/>
+                    <input th:replace="~{/fragment/input/inputFiled::inputAdd('Email','email','email')}"/>
+                    <input th:replace="~{/fragment/input/inputFiled::inputAdd('Username','username','text')}"/>
+                    <input th:replace="~{/fragment/input/inputFiled::inputAdd('Password','password','password')}"/>
+
+                    <div class="row">
+                        <label class="form-label">Role:</label>
+
+                        <div class="col">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio"  th:field="*{roleId}"
+                                       id="inlineRadio1" value="1">
+                                <label class="form-check-label" for="inlineRadio1">Admin</label>
+                            </div>
+
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio"  th:field="*{roleId}"
+                                       id="inlineRadio2" value="2">
+                                <label class="form-check-label" for="inlineRadio2"> Normal</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                        </div>
+                    </div>
+
+                    <br>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+
+
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Modal Add Department-->
+<div th:fragment="add-department(id,title,url)" class="modal fade" th:id="${id}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title" th:text="${title}"></h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <form th:action="@{${url}}" th:object="${USER}" method="post">
+                <div th:replace="~{/fragment/input/inputHidden::inputHidden}"></div>
+
+                <div class="modal-body">
+                    <div class="mb-3 mt-3">
+                        <label class="form-label">Department Code</label>
+                        <input   pattern="^PB.{0,}$" title="Must enter ID with 2 first characters are 'PB'"
+                                 th:field="*{id}" type="text" class="form-control" placeholder="Enter Code" required>
+                    </div>
+                    <input  pattern="^PB.{0,}$" title="Must enter ID with 2 first characters are 'PB'" th:replace="~{/fragment/input/inputFiled::inputAdd('Deparment code','id','text')}"/>
+                    <!--label,field,type-->
+                    <input th:replace="~{/fragment/input/inputFiled::inputAdd('Department Name','name','text')}"/>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Modal Add Employee -->
+<div th:fragment="add-employee(id,title,url)" class="modal fade" th:id="${id}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title" th:text="${title}"></h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <form th:action="@{${url}}" th:object="${USER}" method="post" enctype="multipart/form-data">
+                <div th:replace="~{/fragment/input/inputHidden::inputHidden}"></div>
+                <div class="modal-body">
+                    <div class="mb-3 mt-3">
+                        <label class="form-label"> Emp Id</label>
+                        <input   pattern="^NV.{0,}$" title="Must enter ID with 2 first characters are 'NV'"
+                                 th:field="*{id}" type="text" class="form-control" placeholder="Emp Id" required>
+                    </div>
+                    <input th:replace="~{/fragment/input/inputFiled::inputAdd('Emp Name','name','text')}"/>
+                    <div class="row">
+                        <div class="col">
+
+                            <select th:field="*{account_id}" class="form-select" aria-label="Default select example" >
+                                <th:block th:if="${getAccountListDoesNotExitsInTheEmployee.size > 0}">
+                                    <th:block th:each="acc : ${getAccountListDoesNotExitsInTheEmployee}">
+                                        <option th:value="${acc.id}" th:text="${acc.username}">
+                                        </option>
+                                    </th:block>
+                                </th:block>
+                                <th:block th:unless="${getAccountListDoesNotExitsInTheEmployee.size > 0}">
+                                    <option value="0" disabled selected th:text="${'*the list of accounts has expired'}" >
+                                    </option>
+                                </th:block>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <select th:field="*{department_id}" class="form-select" aria-label="Default select example">
+                                <option th:each="item : ${DEPARTMENT}" th:value="${item.id}" th:text="${item.name}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label class="form-label">Photo</label>
+                        <input type="file" class="form-control" name="file" id="file" placeholder="Enter Photo">
+                    </div>
+
+                    <div class="row">
+                        <label class="form-label">Gender:</label>
+                        <div class="col-2">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="gender" id="inlineRadio1"
+                                       value="1">
+                                <label class="form-check-label" for="inlineRadio1">Male</label>
+                            </div>
+
+                        </div>
+                        <div class="col-2">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="gender" id="inlineRadio2"
+                                       value="0">
+                                <label class="form-check-label" for="inlineRadio2">Female</label>
+                            </div>
+                        </div>
+                        <div class="col-8">
+                        </div>
+                    </div>
+                    <input th:replace="~{/fragment/input/inputFiled::inputAdd('Birthday','date','date')}"/>
+                    <input th:replace="~{/fragment/input/inputFiled::inputAdd('Phone No','phone','text')}"/>
+                    <input th:replace="~{/fragment/input/inputFiled::inputAdd('Salary','salary','tel')}"/>
+                    <div class="form-group">
+                        <label for="comment">Comment:</label>
+                        <textarea class="form-control" th:field="*{note}" rows="5" id="comment"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Modal Add Reward -->
+<div th:fragment="add-reward(id,title,url)" class="modal fade" th:id="${id}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title" th:text="${title}"></h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <form th:action="@{${url}}" th:object="${USER}" method="post">
+                <div th:replace="~{/fragment/input/inputHidden::inputHidden}"></div>
+
+                <div class="modal-body">
+                    <div class="mb-3 mt-3">
+                        <label class="form-label">Employee </label>
+                        <select th:field="*{employeeId}" class="form-select" aria-label="Default select example">
+                            <th:block th:each="item : ${EMP}" >
+                                <th:block th:if="${item.id == 'NV81'}">
+                                    <option style="background-color: whitesmoke" th:value="${item.id}" th:text="${item.name}" disabled>
+                                    </option>
+                                </th:block>
+                                <th:block th:unless="${item.id == 'NV81'}">
+                                    <option th:value="${item.id}" th:text="${item.name}">
+                                    </option>
+                                </th:block>
+                            </th:block>
+
+
+                        </select>
+                    </div>
+                    <div class="row">
+                        <label class="form-label">Type:</label>
+                        <div class="col-4">
+
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="type"
+                                       id="addReward"
+                                       value="true" checked>
+                                <label class="form-check-label" for="addReward">achievement</label>
+                            </div>
+
+                        </div>
+                        <div class="col-4">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="type"
+                                       id="addReward2"
+                                       value="false">
+                                <label class="form-check-label" for="addReward2">discipline</label>
+                            </div>
+                        </div>
+                        <div class="col-6"></div>
+                    </div>
+
+
+                    <!--label,field,type-->
+                    <div class="form-group">
+                        <label for="comment">Comment:</label>
+                        <textarea class="form-control" th:field="*{reason}" rows="2" id="comment" required></textarea>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

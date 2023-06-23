@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<html
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>Spring Boot ajax example</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link rel="stylesheet" type="text/css"
+          href="webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+</head>
+<body>
+
+<h1 id="name">USER</h1>
+<div th:if="${#authorization.expression('hasAuthority(''USER'')') or session.authorities == 'USER'}">
+    <button>Chỉ hiển thị nếu người dùng có quyền USER</button>
+
+    <p th:text="${session.ACCOUNT.email}"></p>
+</div>
+</body>
+</html>
